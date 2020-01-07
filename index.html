@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Racket Poetry by euhmeuh</title>
+    <link rel="stylesheet" type="text/css" href="/rilouwshell.css">
+    <style type="text/css">
+        :root {
+            --bg: #ECE1D6;
+            --fg: #DFC9B2;
+            --accent: #3e3329;
+            --high: #80634c;
+        }
+
+        html {
+            height: 100%;
+            display: flex;
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        body {
+            flex: 1;
+            display: flex;
+            max-width: 100%;
+            margin: 0;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: stretch;
+        }
+
+        @media (orientation: landscape) {
+            body {
+                flex-direction: row;
+            }
+        }
+
+        #editor, #emulator {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            margin: 12px;
+        }
+
+        #editor textarea {
+            flex: 1;
+            font-size: 2em;
+            height: 100%;
+            resize: none;
+            font-family: serif;
+        }
+
+        #emulator #canvas-holder {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #emulator canvas {
+            border: 1px solid var(--bg);
+        }
+    </style>
+</head>
+<body>
+    <section id="editor">
+        <h1>Racket Poetry</h1>
+        <p class="box secondary">
+            Write some poems and see the result by clicking "Read!".<br>
+            <br>
+            <small>Made with <a href="https://racket-lang.org">Racket</a> by <a href="https://github.com/euhmeuh">euhmeuh</a>.</small>
+        </p>
+        <textarea></textarea>
+        <div class="button-box">
+            <button type="button" class="secondary">GitHub</button>
+            <button type="button" class="secondary">Help</button>
+            <button type="button" class="primary">Read!</button>
+        </div>
+    </section>
+
+    <section id="emulator" class="box primary">
+        <div id="canvas-holder">
+            <canvas width="64" height="32"></canvas>
+        </div>
+        <div id="messages">
+            <p>Reading your poem...</p>
+        </div>
+    </section>
+
+    <script type="text/javascript" src="/_.js"></script>
+    <script type="text/javascript" src="/page.js"></script>
+    <script type="text/javascript" src="/rilouwshell.js"></script>
+    <script type="text/javascript">
+        Page.onload(() => {
+            RilouwShell.init();
+        });
+    </script>
+</body>
+</html>
