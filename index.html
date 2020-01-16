@@ -1,99 +1,197 @@
 <!DOCTYPE html>
 <html>
+<!--
+  Copyright (c) 2020 Jérôme Martin <rilouw.eu>
+  The code for this project is released under the terms of the GNU AGPLv3.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
 <head>
-    <meta charset="utf-8">
-    <title>Racket Poetry by euhmeuh</title>
-    <link rel="stylesheet" type="text/css" href="/rilouwshell.css">
-    <style type="text/css">
-        :root {
-            --bg: #ECE1D6;
-            --fg: #DFC9B2;
-            --accent: #3e3329;
-            --high: #80634c;
-        }
+  <meta charset="utf-8">
+  <title>Racket Poetry by euhmeuh</title>
+  <link rel="stylesheet" type="text/css" href="../rilouwshell/web/rilouwshell.css">
+  <style type="text/css">
+    :root {
+      --bg: #ECE1D6;
+      --fg: #DFC9B2;
+      --accent: #3e3329;
+      --high: #80634c;
+    }
 
-        html {
-            height: 100%;
-            display: flex;
-            align-items: stretch;
-            flex-direction: column;
-        }
+    html {
+      height: 100%;
+      display: flex;
+      align-items: stretch;
+      flex-direction: column;
+    }
 
-        body {
-            flex: 1;
-            display: flex;
-            max-width: 100%;
-            margin: 0;
-            flex-direction: column;
-            flex-wrap: wrap;
-            align-items: stretch;
-        }
+    body {
+      flex: 1;
+      display: flex;
+      max-width: 100%;
+      margin: 0;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: stretch;
+    }
 
-        @media (orientation: landscape) {
-            body {
-                flex-direction: row;
-            }
-        }
+    @media (orientation: landscape) {
+      body {
+        flex-direction: row;
+      }
+    }
 
-        #editor, #emulator {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            margin: 12px;
-        }
+    #editor, #emulator {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      margin: 12px;
+    }
 
-        #editor textarea {
-            flex: 1;
-            font-size: 2em;
-            height: 100%;
-            resize: none;
-            font-family: serif;
-        }
+    #editor textarea {
+      flex: 1;
+      font-size: 2em;
+      height: 100%;
+      resize: none;
+      font-family: serif;
+    }
 
-        #emulator #canvas-holder {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    #emulator #canvas-holder {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        #emulator canvas {
-            border: 1px solid var(--bg);
-        }
-    </style>
+    #emulator canvas {
+      border: 1px solid var(--bg);
+    }
+  </style>
 </head>
 <body>
-    <section id="editor">
-        <h1>Racket Poetry</h1>
-        <p class="box secondary">
-            Write some poems and see the result by clicking "Read!".<br>
-            <br>
-            <small>Made with <a href="https://racket-lang.org">Racket</a> by <a href="https://github.com/euhmeuh">euhmeuh</a>.</small>
-        </p>
-        <textarea></textarea>
-        <div class="button-box">
-            <button type="button" class="secondary">GitHub</button>
-            <button type="button" class="secondary">Help</button>
-            <button type="button" class="primary">Read!</button>
-        </div>
-    </section>
+  <section id="editor">
+    <h1>Racket Poetry</h1>
+    <p class="box secondary">
+      Write some poems and see the result by clicking "Read!".<br>
+      <br>
+      <small>Made with <a href="https://racket-lang.org">Racket</a> by <a href="https://github.com/euhmeuh">euhmeuh</a></small>
+      <small>//</small>
+      <small>Chip-8 Emulator by <a href="https://github.com/alexanderdickson/Chip-8-Emulator">Alexander Dickson</a>.</small>
+    </p>
+    <textarea></textarea>
+    <div class="button-box">
+      <button type="button" class="secondary pull-left">GitHub</button>
+      <button type="button" class="secondary">Help</button>
+      <button type="button" class="secondary">Dictionary</button>
+      <button type="button" class="primary">Read!</button>
+    </div>
+  </section>
 
-    <section id="emulator" class="box primary">
-        <div id="canvas-holder">
-            <canvas width="64" height="32"></canvas>
-        </div>
-        <div id="messages">
-            <p>Reading your poem...</p>
-        </div>
-    </section>
+  <section id="emulator" class="box primary">
+    <div id="canvas-holder">
+      <canvas></canvas>
+    </div>
+    <div id="messages">
+      <p>Reading your poem...</p>
+    </div>
+  </section>
 
-    <script type="text/javascript" src="/_.js"></script>
-    <script type="text/javascript" src="/page.js"></script>
-    <script type="text/javascript" src="/rilouwshell.js"></script>
-    <script type="text/javascript">
-        Page.onload(() => {
-            RilouwShell.init();
-        });
-    </script>
+  <script type="text/javascript" src="../rilouwshell/web/_.js"></script>
+  <script type="text/javascript" src="../rilouwshell/web/page.js"></script>
+  <script type="text/javascript" src="../rilouwshell/web/rilouwshell.js"></script>
+  <script type="text/javascript" src="js/chip8.js"></script>
+  <script type="text/javascript" src="js/renderer.js"></script>
+  <script type="text/javascript">
+    Page.onload(() => {
+      RilouwShell.init();
+
+      const PIXEL_SIZE = 12;
+      const canvas = document.querySelector("canvas");
+      const chip = new Chip8;
+      const chipRenderer = new CanvasRenderer(
+        canvas,
+        chip.getDisplayWidth(),
+        chip.getDisplayHeight(),
+        PIXEL_SIZE
+        );
+      chipRenderer.setFgColor("#ECE1D6");
+      chip.setRenderer(chipRenderer);
+
+      const translateKeys = {
+        49: 0x1,  // 1
+        50: 0x2,  // 2
+        51: 0x3,  // 3
+        52: 0x4,  // 4
+        81: 0x5,  // Q
+        87: 0x6,  // W
+        69: 0x7,  // E
+        82: 0x8,  // R
+        65: 0x9,  // A
+        83: 0xA,  // S
+        68: 0xB,  // D
+        70: 0xC,  // F
+        90: 0xD,  // Z
+        88: 0xE,  // X
+        67: 0xF,  // C
+        86: 0x10  // V
+      };
+
+      document.addEventListener("keydown", function(event) {
+        chip.setKey(translateKeys[event.keyCode]);
+      });
+
+      document.addEventListener("keyup", function(event) {
+        chip.unsetKey(translateKeys[event.keyCode]);
+      });
+
+      const tetris = Uint8Array.from([
+        0xa2, 0xb4, 0x23, 0xe6, 0x22, 0xb6, 0x70, 0x01, 0xd0, 0x11, 0x30, 0x25, 0x12, 0x06, 0x71, 0xff,
+        0xd0, 0x11, 0x60, 0x1a, 0xd0, 0x11, 0x60, 0x25, 0x31, 0x00, 0x12, 0x0e, 0xc4, 0x70, 0x44, 0x70,
+        0x12, 0x1c, 0xc3, 0x03, 0x60, 0x1e, 0x61, 0x03, 0x22, 0x5c, 0xf5, 0x15, 0xd0, 0x14, 0x3f, 0x01,
+        0x12, 0x3c, 0xd0, 0x14, 0x71, 0xff, 0xd0, 0x14, 0x23, 0x40, 0x12, 0x1c, 0xe7, 0xa1, 0x22, 0x72,
+        0xe8, 0xa1, 0x22, 0x84, 0xe9, 0xa1, 0x22, 0x96, 0xe2, 0x9e, 0x12, 0x50, 0x66, 0x00, 0xf6, 0x15,
+        0xf6, 0x07, 0x36, 0x00, 0x12, 0x3c, 0xd0, 0x14, 0x71, 0x01, 0x12, 0x2a, 0xa2, 0xc4, 0xf4, 0x1e,
+        0x66, 0x00, 0x43, 0x01, 0x66, 0x04, 0x43, 0x02, 0x66, 0x08, 0x43, 0x03, 0x66, 0x0c, 0xf6, 0x1e,
+        0x00, 0xee, 0xd0, 0x14, 0x70, 0xff, 0x23, 0x34, 0x3f, 0x01, 0x00, 0xee, 0xd0, 0x14, 0x70, 0x01,
+        0x23, 0x34, 0x00, 0xee, 0xd0, 0x14, 0x70, 0x01, 0x23, 0x34, 0x3f, 0x01, 0x00, 0xee, 0xd0, 0x14,
+        0x70, 0xff, 0x23, 0x34, 0x00, 0xee, 0xd0, 0x14, 0x73, 0x01, 0x43, 0x04, 0x63, 0x00, 0x22, 0x5c,
+        0x23, 0x34, 0x3f, 0x01, 0x00, 0xee, 0xd0, 0x14, 0x73, 0xff, 0x43, 0xff, 0x63, 0x03, 0x22, 0x5c,
+        0x23, 0x34, 0x00, 0xee, 0x80, 0x00, 0x67, 0x05, 0x68, 0x06, 0x69, 0x04, 0x61, 0x1f, 0x65, 0x10,
+        0x62, 0x07, 0x00, 0xee, 0x40, 0xe0, 0x00, 0x00, 0x40, 0xc0, 0x40, 0x00, 0x00, 0xe0, 0x40, 0x00,
+        0x40, 0x60, 0x40, 0x00, 0x40, 0x40, 0x60, 0x00, 0x20, 0xe0, 0x00, 0x00, 0xc0, 0x40, 0x40, 0x00,
+        0x00, 0xe0, 0x80, 0x00, 0x40, 0x40, 0xc0, 0x00, 0x00, 0xe0, 0x20, 0x00, 0x60, 0x40, 0x40, 0x00,
+        0x80, 0xe0, 0x00, 0x00, 0x40, 0xc0, 0x80, 0x00, 0xc0, 0x60, 0x00, 0x00, 0x40, 0xc0, 0x80, 0x00,
+        0xc0, 0x60, 0x00, 0x00, 0x80, 0xc0, 0x40, 0x00, 0x00, 0x60, 0xc0, 0x00, 0x80, 0xc0, 0x40, 0x00,
+        0x00, 0x60, 0xc0, 0x00, 0xc0, 0xc0, 0x00, 0x00, 0xc0, 0xc0, 0x00, 0x00, 0xc0, 0xc0, 0x00, 0x00,
+        0xc0, 0xc0, 0x00, 0x00, 0x40, 0x40, 0x40, 0x40, 0x00, 0xf0, 0x00, 0x00, 0x40, 0x40, 0x40, 0x40,
+        0x00, 0xf0, 0x00, 0x00, 0xd0, 0x14, 0x66, 0x35, 0x76, 0xff, 0x36, 0x00, 0x13, 0x38, 0x00, 0xee,
+        0xa2, 0xb4, 0x8c, 0x10, 0x3c, 0x1e, 0x7c, 0x01, 0x3c, 0x1e, 0x7c, 0x01, 0x3c, 0x1e, 0x7c, 0x01,
+        0x23, 0x5e, 0x4b, 0x0a, 0x23, 0x72, 0x91, 0xc0, 0x00, 0xee, 0x71, 0x01, 0x13, 0x50, 0x60, 0x1b,
+        0x6b, 0x00, 0xd0, 0x11, 0x3f, 0x00, 0x7b, 0x01, 0xd0, 0x11, 0x70, 0x01, 0x30, 0x25, 0x13, 0x62,
+        0x00, 0xee, 0x60, 0x1b, 0xd0, 0x11, 0x70, 0x01, 0x30, 0x25, 0x13, 0x74, 0x8e, 0x10, 0x8d, 0xe0,
+        0x7e, 0xff, 0x60, 0x1b, 0x6b, 0x00, 0xd0, 0xe1, 0x3f, 0x00, 0x13, 0x90, 0xd0, 0xe1, 0x13, 0x94,
+        0xd0, 0xd1, 0x7b, 0x01, 0x70, 0x01, 0x30, 0x25, 0x13, 0x86, 0x4b, 0x00, 0x13, 0xa6, 0x7d, 0xff,
+        0x7e, 0xff, 0x3d, 0x01, 0x13, 0x82, 0x23, 0xc0, 0x3f, 0x01, 0x23, 0xc0, 0x7a, 0x01, 0x23, 0xc0,
+        0x80, 0xa0, 0x6d, 0x07, 0x80, 0xd2, 0x40, 0x04, 0x75, 0xfe, 0x45, 0x02, 0x65, 0x04, 0x00, 0xee,
+        0xa7, 0x00, 0xf2, 0x55, 0xa8, 0x04, 0xfa, 0x33, 0xf2, 0x65, 0xf0, 0x29, 0x6d, 0x32, 0x6e, 0x00,
+        0xdd, 0xe5, 0x7d, 0x05, 0xf1, 0x29, 0xdd, 0xe5, 0x7d, 0x05, 0xf2, 0x29, 0xdd, 0xe5, 0xa7, 0x00,
+        0xf2, 0x65, 0xa2, 0xb4, 0x00, 0xee, 0x6a, 0x00, 0x60, 0x19, 0x00, 0xee, 0x37, 0x23
+        ]);
+
+      chip.loadProgram(tetris);
+      chip.start();
+    });
+  </script>
 </body>
 </html>
