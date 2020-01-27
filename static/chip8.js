@@ -49,6 +49,8 @@ const Chip8 = function() {
   this.delayTimer = null;
   this.soundTimer = null;
 
+  this.cycles = 10;
+
   this.keys = {};
   this.reset();
 };
@@ -60,6 +62,10 @@ Chip8.prototype = {
     for (let i = 0; i < program.length; i++) {
       this.memory[i + 0x200] = program[i];
     }
+  },
+
+  setCycles: function(cycles) {
+    this.cycles = cycles;
   },
 
   setKey: function(key) {
@@ -133,7 +139,7 @@ Chip8.prototype = {
       0xF0, 0x80, 0x80, 0x80, 0xF0, // C
       0xE0, 0x90, 0x90, 0x90, 0xE0, // D
       0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
-      0xF0, 0x80, 0xF0, 0x80, 0x80 // F
+      0xF0, 0x80, 0xF0, 0x80, 0x80  // F
     ];
 
     for (i = 0; i < hexChars.length; i++) {
@@ -175,22 +181,22 @@ Chip8.prototype = {
 
     var self = this;
     requestAnimationFrame(function me() {
-    for (let i = 0; i < 10; i++) {
-      if (self.running) {
-        self.emulateCycle();
+      for (let i = 0; i < self.cycles; i++) {
+        if (self.running) {
+          self.emulateCycle();
+        }
       }
-    }
 
-    if (self.drawFlag) {
-      self.renderer.render(self.display);
-      self.drawFlag = false;
-    }
+      if (self.drawFlag) {
+        self.renderer.render(self.display);
+        self.drawFlag = false;
+      }
 
-    if ( ! (self.step++ % 2)) {
-      self.handleTimers();
-    }
+      if ( ! (self.step++ % 2)) {
+        self.handleTimers();
+      }
 
-    requestAnimationFrame(me);
+      requestAnimationFrame(me);
     });
   },
 
@@ -215,6 +221,8 @@ Chip8.prototype = {
     var opcode = this.memory[this.pc] << 8 | this.memory[this.pc + 1];
     var x = (opcode & 0x0F00) >> 8;
     var y = (opcode & 0x00F0) >> 4;
+
+    // console.log(this.v[0], this.v[1], this.v[2], this.v[3])
 
     this.pc += 2;
 

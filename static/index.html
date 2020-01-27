@@ -20,7 +20,7 @@
 <head>
   <meta charset="utf-8">
   <title>Racket Poetry by euhmeuh</title>
-  <link rel="stylesheet" type="text/css" href="../rilouwshell/web/rilouwshell.css">
+  <link rel="stylesheet" type="text/css" href="rilouwshell.css">
   <style type="text/css">
     :root {
       --bg: #ECE1D6;
@@ -94,7 +94,7 @@
       <button type="button" class="secondary pull-left">GitHub</button>
       <button type="button" class="secondary">Help</button>
       <button type="button" class="secondary">Dictionary</button>
-      <button type="button" class="primary">Read!</button>
+      <button id="button-read" type="button" class="primary">Read!</button>
     </div>
   </section>
 
@@ -107,14 +107,22 @@
     </div>
   </section>
 
-  <script type="text/javascript" src="../rilouwshell/web/_.js"></script>
-  <script type="text/javascript" src="../rilouwshell/web/page.js"></script>
-  <script type="text/javascript" src="../rilouwshell/web/rilouwshell.js"></script>
-  <script type="text/javascript" src="js/chip8.js"></script>
-  <script type="text/javascript" src="js/renderer.js"></script>
+  <script type="text/javascript" src="_.js"></script>
+  <script type="text/javascript" src="page.js"></script>
+  <script type="text/javascript" src="request.js"></script>
+  <script type="text/javascript" src="rilouwshell.js"></script>
+  <script type="text/javascript" src="chip8.js"></script>
+  <script type="text/javascript" src="renderer.js"></script>
   <script type="text/javascript">
     Page.onload(() => {
       RilouwShell.init();
+
+      const textarea = Page.get('textarea');
+      Page.get('#button-read').addEventListener('click', () => {
+        Request.post("/", textarea.value, "text/plain").then((response) => {
+          console.log(response);
+        });
+      });
 
       const PIXEL_SIZE = 12;
       const canvas = document.querySelector("canvas");
@@ -124,7 +132,7 @@
         chip.getDisplayWidth(),
         chip.getDisplayHeight(),
         PIXEL_SIZE
-        );
+      );
       chipRenderer.setFgColor("#ECE1D6");
       chip.setRenderer(chipRenderer);
 
@@ -187,10 +195,67 @@
         0xa7, 0x00, 0xf2, 0x55, 0xa8, 0x04, 0xfa, 0x33, 0xf2, 0x65, 0xf0, 0x29, 0x6d, 0x32, 0x6e, 0x00,
         0xdd, 0xe5, 0x7d, 0x05, 0xf1, 0x29, 0xdd, 0xe5, 0x7d, 0x05, 0xf2, 0x29, 0xdd, 0xe5, 0xa7, 0x00,
         0xf2, 0x65, 0xa2, 0xb4, 0x00, 0xee, 0x6a, 0x00, 0x60, 0x19, 0x00, 0xee, 0x37, 0x23
-        ]);
+      ]);
+
+      const rand = Uint8Array.from([
+        0xA2, 0x2C,
+        0x60, 0x00,
+        0x61, 0x00,
+        0x62, 0x00,
+        0x6A, 0x01,
+        0x22, 0x28,
+        0xD0, 0x11,
+        0x83, 0xF3,
+        0x83, 0xA3,
+        0x43, 0x01,
+        0xD0, 0x11,
+        0x70, 0x01,
+        0x30, 0x40,
+        0x12, 0x20,
+        0x71, 0x01,
+        0x60, 0x00,
+        0x41, 0x20,
+        0x61, 0x00,
+        0x72, 0x01,
+        0x12, 0x0A,
+        0xC3, 0x01,
+        0x00, 0xEE,
+        0x80, 0x00
+      ]);
+
+      const demo =  Uint8Array.from([
+        0xA2, 0x32,
+        0x60, 0x00,
+        0x61, 0x00,
+        0x62, 0x00,
+        0x6A, 0x01,
+        0x6B, 0x04,
+        0x22, 0x2C,
+        0xD0, 0x11,
+        0x83, 0xF3,
+        0x83, 0xA3,
+        0x43, 0x01,
+        0xD0, 0x11,
+        0x70, 0x01,
+        0x30, 0x40,
+        0x12, 0x22,
+        0x71, 0x01,
+        0x60, 0x00,
+        0x31, 0x20,
+        0x12, 0x0C,
+        0x61, 0x00,
+        0x72, 0x01,
+        0x12, 0x0C,
+        0x83, 0x00,
+        0x83, 0xB2,
+        0x00, 0xEE,
+        0x80, 0x00
+      ]);
 
       chip.loadProgram(tetris);
+      //chip.setCycles(28672);
       chip.start();
+      window.chip = chip;
     });
   </script>
 </body>
