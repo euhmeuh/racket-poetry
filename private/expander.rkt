@@ -26,6 +26,7 @@
 
 (require
   racket/list
+  racket/match
   racket/function
   racket/string
   (for-syntax
@@ -136,7 +137,7 @@
   (for/or ([entry dict]) (entry word)))
 
 (define (find-meaning sentence)
-  (map (lambda (word) (find-in-dict dictionary word))
+  (map (lambda (word) (or (find-in-dict dictionary word) word))
        (cdr sentence)))
 
 (define (find-mode verb sentence)
@@ -161,7 +162,20 @@
       sentence)))
 
 (define (find-index sentence indexes)
-  "todo")
+  (define words
+    (filter-map
+      (lambda (word)
+        (and (string? word)
+             (normalize word)))
+      sentence))
+  (define matches
+    (filter-map
+      (lambda (pair)
+        (match-define (list word index) pair)
+        (and (string-contains? index word)
+             (cons (string-length word) index)))
+      (cartesian-product words indexes)))
+  (cdr (argmax car matches)))
 
 (define (take-numbers sentence [size 0] [skip 0])
   (define filtered (filter number? sentence))
@@ -183,14 +197,16 @@
     [(eq? verb #f)          (cons 'data (take-numbers sentence))]
     [else                   (cons verb (take-numbers sentence))]))
 
-(define (normalize title)
-  (string-join (map string-downcase (cdr title)) ""))
+(define (normalize str)
+  (string-downcase str))
+
+(define (normalize-title title)
+  (string-join (map normalize (cdr title)) " "))
 
 (define (read-program prog)
   (define indexes
-    (map normalize
+    (map normalize-title
          (filter (starts-with? 'title) (cdr prog))))
-  (displayln indexes)
   (map (compose (curry interpret indexes) find-meaning)
        (filter (starts-with? 'sentence) (cdr prog))))
 
@@ -199,35 +215,3 @@
     (provide poem)
     (define poem (read-program 'expr))
     poem))
-
-
-#;(list
-  (label "reset")
-  (mem "pattern")
-  (ldi 0 0)
-  (ldi 1 0)
-  (ldi 2 0)
-  (ldi 10 1)
-  (label "pixel")
-  (cal "renderer")
-  (drw 0 1 1)
-  (xor 3 15)
-  (xor 3 10)
-  (sni 3 1)
-  (drw 0 1 1)
-  (adi 0 1)
-  (sei 0 4 0)
-  (jmp "over")
-  (adi 1 1)
-  (ldi 0 0)
-  (label "over")
-  (sni 1 2 0)
-  (ldi 1 0)
-  (adi 2 1)
-  (jmp "pixel")
-  (label "renderer")
-  (rnd 3 1)
-  (ret)
-  (label "pattern")
-  (data 8 0 0 0)
-  )
