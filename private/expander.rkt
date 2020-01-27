@@ -25,6 +25,7 @@
   (rename-out [module-begin #%module-begin]))
 
 (require
+  racket/list
   racket/function
   racket/string
   (for-syntax
@@ -43,6 +44,7 @@
     ; Numbers
     (word #rx"(void|death|night|blackhole)s?" 0)
     (word #rx"zero(es|s)?|none"               0)
+    (word #rx"empt(y|iness)"                  0)
     (word #rx"(water|tear|sea)s?"             1)
     (word #rx"(ones?|once|first)"             1)
     (word #rx"(fire(s)?|firing)"              2)
@@ -82,8 +84,8 @@
     (word #rx"fifteen(th)?"                  15)
 
     ; Modifiers for meta verbs
-    (word #rx"like|similar|identical" '(mode eq))
-    (word #rx"unlike|different|apart" '(mode ne))
+    (word #rx"like(ly)?|similar|identical" '(mode eq))
+    (word #rx"unlike(ly)?|different|apart" '(mode ne))
 
     ; Verbs
     (word #rx"quit(ted|s|ting)?"       'ext)
@@ -137,26 +139,49 @@
   (map (lambda (word) (find-in-dict dictionary word))
        (cdr sentence)))
 
+(define (find-mode verb sentence)
+  (define mode (findf symbol?
+                      (filter-map
+                        (lambda (word)
+                          (and ((starts-with? 'mode) word)
+                               (cadr word)))
+                        sentence)))
+  (define found (and mode
+                    (assq mode (cdr verb))))
+  (and found
+       (cdr found)))
+
 (define (find-verb sentence)
-  (findf (lambda (word)
-           (or (symbol? word)
-               ((starts-with? 'meta) word)))
-         sentence))
+  (findf symbol?
+    (filter-map
+      (lambda (word)
+        (cond
+          [(symbol? word) word]
+          [((starts-with? 'meta) word) (find-mode word sentence)]))
+      sentence)))
 
 (define (find-index sentence indexes)
   "todo")
 
-(define (pop-args! sentence [size 0])
-  '(0 0))
+(define (take-numbers sentence [size 0] [skip 0])
+  (define filtered (filter number? sentence))
+  (define numbers (or (and (pair? filtered) (drop filtered skip))
+                      '()))
+  (define len (length numbers))
+  (cond
+    [(= size 0) numbers]
+    [(< len size) (append (build-list (- size len) (lambda (x) 0))
+                          numbers)]
+    [else (take numbers size)]))
 
 (define (interpret indexes sentence)
   (define verb (find-verb sentence))
   (cond
     [(memq verb indexed)    (list verb (find-index sentence indexes))]
-    [(memq verb optional-b) (cons verb (append (pop-args! sentence 1)
-                                               (pop-args! sentence 2)))]
-    [(eq? verb #f)          (cons 'data (pop-args! sentence))]
-    [else                   (cons verb (pop-args! sentence))]))
+    [(memq verb optional-b) (cons verb (append (take-numbers sentence 1)
+                                               (take-numbers sentence 2 1)))]
+    [(eq? verb #f)          (cons 'data (take-numbers sentence))]
+    [else                   (cons verb (take-numbers sentence))]))
 
 (define (normalize title)
   (string-join (map string-downcase (cdr title)) ""))
