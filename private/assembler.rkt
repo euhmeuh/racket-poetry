@@ -22,14 +22,29 @@
 
 (provide assemble)
 
+(require
+  racket/string
+  net/base64)
+
 (define (op a b c d)
-  (+ (* a 4096)
-     (* b 256)
-     (* c 16)
-     d))
+  (list
+    (+ (* a 16) b)
+    (+ (* c 16) d)))
 
 (define (index-labels program)
-  (values))
+  (for/fold ([indexes (hash)]
+             [instructions (list)]
+             [pc #x200])
+            ([line program])
+    (define label (and (eq? (car line) 'label)
+                       (cadr line)))
+    (if label
+      (values (hash-set indexes label pc)
+              instructions
+              pc)
+      (values indexes
+              (append instructions (list line))
+              (+ pc 2)))))
 
 (define optable
   (hasheq
@@ -68,12 +83,32 @@
     'bcd (lambda (x)     (op 15  x  3  3)) ; Convert VX to BCD and save it to I+0, I+1 and I+2
     'dmp (lambda (x)     (op 15  x  5  5)) ; Dump V0-VX at I
     'rst (lambda (x)     (op 15  x  6  5)) ; Restore V0-VX from I
+
+    'data (lambda (a b c d) (op a b c d))
     ))
 
 (define indexed '(jmp cal mem jma))
 
+(define (get-index indexes ref)
+  (define result (hash-ref indexes ref))
+  (list
+    (arithmetic-shift (bitwise-and result #xF00) -8)
+    (arithmetic-shift (bitwise-and result #x0F0) -4)
+    (bitwise-and result #x00F)))
+
 (define (assemble program)
-  (define-values (indexes instructions)
-                 (index-labels program))
-  (for/list ([line program])
-    #""))
+  (define-values
+    (indexes instructions pc)
+    (index-labels program))
+  (bytes->string/utf-8
+    (base64-encode
+      (list->bytes
+        (apply append
+          (map
+            (lambda (instr)
+              (define func (hash-ref optable (car instr)))
+              (if (memq (car instr) indexed)
+                  (apply func (get-index indexes (cadr instr)))
+                  (apply func (cdr instr))))
+            instructions)))
+      #"")))

@@ -31,6 +31,14 @@
 
 (define static-path (path->string (build-path (current-server-root-path) "static")))
 
+(define (format-assembly ast)
+  (map
+    (lambda (line)
+      (map (lambda (word)
+             (if (symbol? word) (symbol->string word) word))
+           line))
+    ast))
+
 (define-response (poem)
   (define raw (request-post-data/raw req))
   (define text (bytes->string/utf-8 raw))
@@ -40,7 +48,7 @@
   (response/json
     (hasheq
       'binary (assemble result)
-      'lines result
+      'assembly (format-assembly result)
       'errors (list))))
 
 (parameterize ([current-server-static-paths (list static-path)])

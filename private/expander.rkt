@@ -137,8 +137,10 @@
   (for/or ([entry dict]) (entry word)))
 
 (define (find-meaning sentence)
-  (map (lambda (word) (or (find-in-dict dictionary word) word))
-       (cdr sentence)))
+  (cons
+    (car sentence)
+    (map (lambda (word) (or (find-in-dict dictionary word) word))
+         (cdr sentence))))
 
 (define (find-mode verb sentence)
   (define mode (findf symbol?
@@ -175,7 +177,12 @@
         (and (string-contains? index word)
              (cons (string-length word) index)))
       (cartesian-product words indexes)))
-  (cdr (argmax car matches)))
+  (if (pair? matches)
+      (cdr (argmax car matches))
+      (raise-arguments-error 'poem-index
+                             "no index found for jump"
+                             "words" words
+                             "indexes" indexes)))
 
 (define (take-numbers sentence [size 0] [skip 0])
   (define filtered (filter number? sentence))
@@ -188,14 +195,17 @@
                           numbers)]
     [else (take numbers size)]))
 
-(define (interpret indexes sentence)
-  (define verb (find-verb sentence))
+(define (interpret indexes line)
+  (define content (cdr line))
+  (define verb (and ((starts-with? 'sentence) line)
+                    (find-verb content)))
   (cond
-    [(memq verb indexed)    (list verb (find-index sentence indexes))]
-    [(memq verb optional-b) (cons verb (append (take-numbers sentence 1)
-                                               (take-numbers sentence 2 1)))]
-    [(eq? verb #f)          (cons 'data (take-numbers sentence))]
-    [else                   (cons verb (take-numbers sentence))]))
+    [((starts-with? 'title) line) (list 'label (normalize-title line))]
+    [(memq verb indexed)          (list verb (find-index content indexes))]
+    [(memq verb optional-b)       (cons verb (append (take-numbers content 1)
+                                                     (take-numbers content 2 1)))]
+    [(eq? verb #f)                (cons 'data (take-numbers content 4))]
+    [else                         (cons verb (take-numbers content))]))
 
 (define (normalize str)
   (string-downcase str))
@@ -208,7 +218,7 @@
     (map normalize-title
          (filter (starts-with? 'title) (cdr prog))))
   (map (compose (curry interpret indexes) find-meaning)
-       (filter (starts-with? 'sentence) (cdr prog))))
+       (cdr prog)))
 
 (define-syntax-rule (module-begin expr)
   (#%module-begin
