@@ -93,7 +93,7 @@
     <div class="button-box">
       <button type="button" class="secondary pull-left">GitHub</button>
       <button type="button" class="secondary">Help</button>
-      <button type="button" class="secondary">Dictionary</button>
+      <button id="button-dictionary" type="button" class="secondary">Dictionary</button>
       <button id="button-read" type="button" class="primary">Read!</button>
     </div>
   </section>
@@ -102,9 +102,7 @@
     <div id="canvas-holder">
       <canvas></canvas>
     </div>
-    <div id="messages">
-      <p>Reading your poem...</p>
-    </div>
+    <div id="messages"></div>
   </section>
 
   <script type="text/javascript" src="_.js"></script>
@@ -118,16 +116,34 @@
     Page.onload(() => {
       RilouwShell.init();
 
+      function clearMessages() {
+        Page.get('#messages').innerHTML = "";
+      }
+
+      function addMessage(text) {
+        Page.get('#messages').appendChild(
+          Page.createElementFromJson({
+            tag: "p", text
+          })
+        );
+      }
+
       const textarea = Page.get('textarea');
       Page.get('#button-read').addEventListener('click', () => {
+        clearMessages();
+        chip.reset();
+        addMessage("Reading your poem...");
         Request.post("/", textarea.value, "text/plain").then((response) => {
+          clearMessages();
           console.log(response);
           const program = Base64.decode(response.binary);
-          chip.stop();
-          chip.reset();
           chip.loadProgram(program);
           chip.start();
         });
+      });
+
+      Page.get('#button-dictionary').addEventListener('click', () => {
+        // TODO
       });
 
       const PIXEL_SIZE = 12;
@@ -141,7 +157,8 @@
       );
       chipRenderer.setFgColor("#ECE1D6");
       chip.setRenderer(chipRenderer);
-      // chip.setCycles(28672);
+      chip.setCycles(40);
+      //chip.setCycles(28672);
 
       const translateKeys = {
         49: 0x1,  // 1

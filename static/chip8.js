@@ -36,7 +36,8 @@ const Chip8 = function() {
   this.displayHeight = 32;
   this.display = new Array(this.displayWidth * this.displayHeight);
   this.step = null;
-  this.running = null;
+  this.paused = false;
+  this.stopped = true;
   this.renderer = null;
 
   var memory = new ArrayBuffer(0x1000);
@@ -169,7 +170,8 @@ Chip8.prototype = {
     this.soundTimer = 0;
 
     this.step = 0;
-    this.running = false;
+    this.paused = false;
+    this.stopped = true;
   },
 
   start: function () {
@@ -177,12 +179,17 @@ Chip8.prototype = {
       throw new Error("You must specify a renderer.");
     }
 
-    this.running = true;
+    this.paused = false;
+    this.stopped = false;
 
     var self = this;
     requestAnimationFrame(function me() {
+      if (self.stopped) {
+        return;
+      }
+
       for (let i = 0; i < self.cycles; i++) {
-        if (self.running) {
+        if (!self.paused) {
           self.emulateCycle();
         }
       }
@@ -200,8 +207,12 @@ Chip8.prototype = {
     });
   },
 
+  pause: function () {
+    this.paused = true;
+  },
+
   stop: function () {
-    this.running = false;
+    this.stopped = true;
   },
 
   handleTimers: function() {
@@ -499,7 +510,7 @@ Chip8.prototype = {
         self.setKey.apply(self, arguments);
         self.start();
       }
-      this.stop();
+      this.pause();
       return;
 
       // LD DT, Vx
