@@ -222,18 +222,24 @@ Chip8.prototype = {
     var x = (opcode & 0x0F00) >> 8;
     var y = (opcode & 0x00F0) >> 4;
 
-    // console.log(this.v[0], this.v[1], this.v[2], this.v[3])
-
     this.pc += 2;
 
     // Check first nibble to determine opcode.
     switch (opcode & 0xf000) {
 
     case 0x0000:
+    if (x === 0 && y === 1) {
+      // EXT
+      // 001n
+      // Exit with code n.
+      console.log("Program exited with code", opcode & 0x000F);
+      this.stop();
+      break;
+    }
     switch (opcode) {
       // CLS
       // OOE0
-      // CLear the display.
+      // Clear the display.
       case 0x00E0:
       this.renderer.clear();
       for (var i = 0; i < this.display.length; i++) {
