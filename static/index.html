@@ -52,7 +52,7 @@
       }
     }
 
-    #editor, #emulator {
+    #editor, #emulator, #dictionary {
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -112,6 +112,63 @@ Go and say: Hello, world!
     <div id="messages"></div>
   </section>
 
+  <section id="dictionary" class="box primary display-none">
+    <h2>Dictionary</h2>
+    <details>
+      <summary>Numbers</summary>
+      <p>Numbers are expressed as hexadecimal nibbles, from 0 to F.<br>
+         For example, the number 42 is 2A in hexadecimal, which is made of the nibbles 2 and A.</p>
+      <dl>
+        <dt>0 (zero)</dt>
+        <dd>Void, Death, Night, Blackhole, Zero, None, Empty(iness), Nothing(ness), Still(ness), Snow, Nowhere, False, Dark, Black</dd>
+        <dt>1 (one)</dt>
+        <dd>Water, Tear, Sea, Yes, True, Truth, Everywhere, One, Once, First, Blue</dd>
+        <dt>2 (two)</dt>
+        <dd>Fire, Blaze, Burn, Two, Twice, Second(ary), Red</dd>
+        <dt>3 (three)</dt>
+        <dd>Vapor, Steam, Fog, Three, Third, Purple</dd>
+        <dt>4 (four)</dt>
+        <dd>Earth, Soil, Ground, Rocks, Four, Fourth, Yellow</dd>
+        <dt>5 (five)</dt>
+        <dd>Mud, Oil, Glue, Tree, Leaf, Five, Fifth, Green</dd>
+        <dt>6 (six)</dt>
+        <dd>Lava, Volcano, Six, Sixth, Orange</dd>
+        <dt>7 (seven)</dt>
+        <dd>Ceramic, Bowl, Seven, Seventh, Grey, Gray</dd>
+        <dt>8 (eight)</dt>
+        <dd>Wind, Blow, Eight, Cyan</dd>
+        <dt>9 (nine)</dt>
+        <dd>Rain, Drop, Nine, Ninth, Marine</dd>
+        <dt>A (ten)</dt>
+        <dd>Thunder, Bolt, Spark, Ten, Tenth, Violet</dd>
+        <dt>B (eleven)</dt>
+        <dd>Cloud, Sky, Eleven, Eleventh, Pink</dd>
+        <dt>C (twelve)</dt>
+        <dd>Sand, Desert, Snake, Twelve, Twelfth, Rose</dd>
+        <dt>D (thirteen)</dt>
+        <dd>River, Net, Fish, Thirteen, Thirteenth, Azure(an)</dd>
+        <dt>E (fourteen)</dt>
+        <dd>Window, Glass, Transparent, Fourteen, Fourteenth</dd>
+        <dt>F (fifteen)</dt>
+        <dd>Life, Living, Complete, Full(y), Sun, Light, Planet, Fifteen, Fifteenth, White</dd>
+      </dl>
+    </details>
+    <details>
+      <summary>Verbs</summary>
+      <dl>
+        <dt></dt>
+        <dd></dd>
+      </dl>
+    </details>
+    <details>
+      <summary>Modifiers</summary>
+      <dl>
+        <dt></dt>
+        <dd></dd>
+      </dl>
+    </details>
+  </section>
+
   <script type="text/javascript" src="_.js"></script>
   <script type="text/javascript" src="page.js"></script>
   <script type="text/javascript" src="request.js"></script>
@@ -150,7 +207,15 @@ Go and say: Hello, world!
       });
 
       Page.get('#button-dictionary').addEventListener('click', () => {
-        // TODO
+        const dict = Page.get('#dictionary');
+        const emulator = Page.get('#emulator');
+        if(dict.classList.contains('display-none')) {
+          dict.classList.remove('display-none');
+          emulator.classList.add('display-none');
+        } else {
+          dict.classList.add('display-none');
+          emulator.classList.remove('display-none');
+        }
       });
 
       const PIXEL_SIZE = 12;
