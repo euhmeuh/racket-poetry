@@ -168,9 +168,17 @@ Go and say: Hello, world!
   <section id="dictionary" class="box primary display-none">
     <h2>Help & Dictionary</h2>
     <div class="content">
-      <details>
+      <details open>
         <summary>How does this work?</summary>
-        <p></p>
+        <p>Welcome to the poetry machine! You can write poems, and they are also code!</p>
+        <p>In order to write something that works (showing something interesting on the screen) you need to understand a bit how the underlying platform works.</p>
+        <p>The emulator provided here is a Chip-8. This is an old virtual machine invented in the 70s and released in the BYTE magazine. You can find out more about it on <a href="https://en.wikipedia.org/wiki/CHIP-8">Wikipedia</a>.</p>
+        <p>The Chip-8 has only 35 instructions, and they are extremely easy to use and remember. Here, they all correspond to a "verb".</p>
+        <p>Just use the right verb in your sentence, and the corresponding insctruction will be executed.</p>
+        <p>Each time you make a new line, it'll correspond to a new instruction. In each line, the verb will try to find its arguments. Try to hide them properly so that the poem still keeps some style!</p>
+        <p>To see how numbers and verbs work together, read the sections "Numbers" and "Verbs".</p>
+        <p>For further explainations, try the video of the <a href="https://fosdem.org/2020/schedule/event/racket_poetry/">FOSDEM presentation</a>.</p>
+        <p>Have fun, and share your work on Mastodon with the hashtag <span class="arg">#codepoetry</span>.</p>
       </details>
       <details>
         <summary>Titles and indexes</summary>
@@ -387,9 +395,18 @@ Go and say: Hello, world!
           <dd>Write the given number <span class="arg">ABCD</span> here in memory.</dd>
         </dl>
       </details>
-      <details>
+      <details open>
         <summary>About this project</summary>
-        <p></p>
+        <p>This project was created by Jérôme Martin, who you can find:</p>
+        <ul>
+          <li>On <a href="https://github.com/euhmeuh">Github</a></li>
+          <li>On his own <a href="http://rilouw.eu">Blog</a></li>
+          <li>On Mastodon <a href="https://mamot.fr/@euhmeuh">@euhmeuh@mamot.fr</a></li>
+        </ul>
+        <p>It will be presented at <a href="https://fosdem.org/2020/schedule/event/racket_poetry/">FOSDEM 2020 on Sunday the 2nd at 9:30AM!</a></p>
+        <p>I hope you enjoy this. I can't wait to see the poems you're going to compose! Please share them with everyone on Mastodon with the hashtag <span class="arg">#codepoetry</span>.</p>
+        <p>All the code for this project is released under the terms of the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">GNU AGPLv3 license</a>.</p>
+        <p>Copyright (c) 2020 Jérôme Martin — All Rights Reserved</p>
       </details>
     </div>
   </section>
