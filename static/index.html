@@ -103,27 +103,33 @@
 
     dt {
       font-weight: bold;
+      font-family: serif;
       margin-left: 24px;
       margin-top: 24px;
       margin-bottom: 12px;
     }
 
     dd {
+      font-family: serif;
       margin-left: 48px;
     }
 
     .arg {
-      background-color: var(--bg);
-      color: var(--accent);
       font-weight: normal;
+      font-family: serif;
       border-radius: 64px;
       padding: 4px 8px 0px 8px;
+
+      color: var(--bg);
+      border: 1px solid var(--bg);
     }
 
     .arg.opt {
-      background-color: transparent;
-      border: 1px solid var(--bg);
-      color: var(--bg);
+      border-style: dashed;
+    }
+
+    code {
+      font-family: serif;
     }
   </style>
 </head>
@@ -147,8 +153,7 @@ Go and say: Hello, world!
 </textarea>
     <div class="button-box">
       <a class="button secondary pull-left" href="https://github.com/euhmeuh/racket-poetry" target="_blank">GitHub</a>
-      <button type="button" class="secondary">Help</button>
-      <button id="button-dictionary" type="button" class="secondary">Dictionary</button>
+      <button id="button-dictionary" type="button" class="secondary">Help & Dictionary</button>
       <button id="button-read" type="button" class="primary">Read!</button>
     </div>
   </section>
@@ -161,8 +166,33 @@ Go and say: Hello, world!
   </section>
 
   <section id="dictionary" class="box primary display-none">
-    <h2>Dictionary</h2>
+    <h2>Help & Dictionary</h2>
     <div class="content">
+      <details>
+        <summary>How does this work?</summary>
+        <p></p>
+      </details>
+      <details>
+        <summary>Titles and indexes</summary>
+        <p>Some verbs require you to make reference to other parts of the code, for example to move from one part in memory to another, or to set the data pointer <span class="arg">I</span>.</p>
+        <p>To do that, you can name some parts of your code using a title.</p>
+        <p>A title is a sentence that won't be executed, but just gives a name to the code following it. You can make a title by putting dashes, equal signs, or underscores around it.</p>
+        <blockquote>
+          <code>
+            - This is a title -<br>
+            == This one too ==<br>
+            ____I am also a title___<br>
+          </code>
+        </blockquote>
+        <p>Titles can then be referenced in <span class="arg">Indexed</span> verbs by hiding a part of the title somewhere in the sentence. The biggest matching word is choosen. Example:</p>
+        <blockquote>
+          <code>
+            -- The Sea is bright --<br>
+            Remember the sea.
+          </code>
+        </blockquote>
+        <p>In the given example, the verb "Remember" references the title "The Sea is bright" by using the word "sea". If the sentence had the word "bright" in it, that would have given the same result.</p>
+      </details>
       <details>
         <summary>Numbers</summary>
         <p>
@@ -172,98 +202,194 @@ Go and say: Hello, world!
            Other possibilities are "Red thunder", "Blazing bolt" or "Smell twice the Violet".
         </p>
         <dl>
-          <dt>0 (zero)</dt>
+          <dt>Zero — 0</dt>
           <dd>Void, Death, Night, Blackhole, Zero, None, Empty(iness), Nothing(ness), Still(ness), Snow, Nowhere, False, Dark, Black</dd>
-          <dt>1 (one)</dt>
+          <dt>One — 1</dt>
           <dd>Water, Tear, Sea, Yes, True, Truth, Everywhere, One, Once, First, Blue</dd>
-          <dt>2 (two)</dt>
+          <dt>Two — 2</dt>
           <dd>Fire, Blaze, Burn, Two, Twice, Second(ary), Red</dd>
-          <dt>3 (three)</dt>
+          <dt>Three — 3</dt>
           <dd>Vapor, Steam, Fog, Three, Third, Purple</dd>
-          <dt>4 (four)</dt>
+          <dt>Four — 4</dt>
           <dd>Earth, Soil, Ground, Rocks, Four(th), Yellow</dd>
-          <dt>5 (five)</dt>
+          <dt>Five — 5</dt>
           <dd>Mud, Oil, Glue, Tree, Leaf, Five, Fifth, Green</dd>
-          <dt>6 (six)</dt>
+          <dt>Six — 6</dt>
           <dd>Lava, Volcano, Six(th), Orange</dd>
-          <dt>7 (seven)</dt>
+          <dt>Seven — 7</dt>
           <dd>Ceramic, Bowl, Seven(th), Grey, Gray</dd>
-          <dt>8 (eight)</dt>
+          <dt>Eight — 8</dt>
           <dd>Wind, Blow, Eight(h), Cyan</dd>
-          <dt>9 (nine)</dt>
+          <dt>Nine — 9</dt>
           <dd>Rain, Drop, Nine, Ninth, Marine</dd>
-          <dt>A (ten)</dt>
+          <dt>Ten — A</dt>
           <dd>Thunder, Bolt, Spark, Ten(th), Violet</dd>
-          <dt>B (eleven)</dt>
+          <dt>Eleven — B</dt>
           <dd>Cloud, Sky, Eleven(th), Pink</dd>
-          <dt>C (twelve)</dt>
+          <dt>Twelve — C</dt>
           <dd>Sand, Desert, Snake, Twelve, Twelfth, Rose</dd>
-          <dt>D (thirteen)</dt>
+          <dt>Thirteen — D</dt>
           <dd>River, Net, Fish, Thirteen(th), Azure(an)</dd>
-          <dt>E (fourteen)</dt>
+          <dt>Fourteen — E</dt>
           <dd>Window, Glass, Transparent, Fourteen(th)</dd>
-          <dt>F (fifteen)</dt>
+          <dt>Fifteen — F</dt>
           <dd>Life, Living, Complete, Full(y), Sun, Light, Planet, Fifteen(th), White</dd>
         </dl>
       </details>
       <details>
         <summary>Verbs</summary>
+        <h3>How to read this section</h3>
         <p>
-          Verbs expect some parameters to be present anywhere inside the sentence (even before them). The order of the parameters is important, because the verb will take them from first to last.<br>
+          Verbs expect some parameters to be present anywhere inside the sentence (even before them).<br>
+          The order of the parameters is important, because the verb will take them from first to last.<br>
           In definitions, the number of parameters each verb takes is indicated just after the verb, like this:
         <blockquote>
           <dl>
-            <dt>Verb <span class="arg">X</span> <span class="arg">Y</span></dt>
+            <dt>Verb — <span class="arg">X</span> <span class="arg">Y</span></dt>
             <dd>What the verb does with <span class="arg">X</span> and <span class="arg">Y</span>.</dd>
+            <dt>Verb — <span class="arg">X</span> <span class="arg opt">A</span> <span class="arg">B</span></dt>
+            <dd>This verb takes a nibble <span class="arg">X</span>, then either only <span class="arg">B</span> (A will be zero) or <span class="arg">AB</span></dd>
+            <dt>Verb — <span class="arg">Index</span></dt>
+            <dd>This verb needs a title somewhere in its sentence.</dd>
           </dl>
         </blockquote>
         <p>
           There are three types of parameters : numbers, indexes and modifiers.
         </p>
         <p>
-          Numbers are nibbles (see the "Numbers" section of the dictionary) and can sometimes be expressed by specifying the last nibble only (the first being an implicit zero). In that case, the implicit argument is indicated with a circle <span class="arg opt">A</span> in the verb definition.
+          Numbers are made of nibbles (see the "Numbers" section of the dictionary). To form bigger numbers, you add multiple nibbles together. Some verbs accept small numbers (made of one nibble), or bigger numbers made of two nibbles. In the later case, the first nibble can be optional (its value will be zero if omitted). This kind of optional nibble is indicated with a dashed outline <span class="arg opt">A</span> in the verb definition.<br>
+          For example, "Rose water" is the number "C1" while "Water" is the number "01" (with zero being the implict first nibble), and "Water rose" is the number "1C".
         </p>
         <p>
-          Indexes are used for movements and memory instructions. The verb tries to find the longest complete word in the sentence that matches one of the poem titles. Indexes cannot be expressed as numbers for now, only as plain text words.
+          Indexes are used for movements and memory instructions. The verb tries to find the longest complete word in the sentence that matches one of the poem titles. Indexes cannot be expressed as numbers, only as plain text words.
         </p>
         <p>
           Modifiers are used in only two verbs, "Skip, Evade" and "Jump". They specify whether the instruction should be "skip if equal" or "skip if different". They can be anywhere in the sentence, but need to be there, otherwise the verb can't be translated into a machine instruction. You can find the list of modifiers in the corresponding dictionary section.
         </p>
+        <h3>Verb definitions</h3>
         <dl>
-          <dt>Quit <span class="arg">A</span></dt>
+          <dt>Quit — <span class="arg">A</span></dt>
           <dd>Stop the program and return the value <span class="arg">A</span>.</dd>
-        </dl>
-        <dl>
-          <dt>Clear</dt>
+
+          <dt>Clear —</dt>
           <dd>Clear the screen.</dd>
-        </dl>
-        <dl>
-          <dt>Return, Leave</dt>
+
+          <dt>Return, Leave —</dt>
           <dd>Return from a subroutine.</dd>
-        </dl>
-        <dl>
-          <dt>Go <span class="arg">Index</span></dt>
+
+          <dt>Go — <span class="arg">Index</span></dt>
           <dd>Go to the given title.</dd>
-        </dl>
-        <dl>
-          <dt>Call, Hail <span class="arg">Index</span></dt>
+
+          <dt>Call, Hail — <span class="arg">Index</span></dt>
           <dd>Call the subroutine at the given title.</dd>
-        </dl>
-        <dl>
-          <dt>Skip, Evade <span class="arg">X</span> <span class="arg opt">A</span> <span class="arg">B</span> (needs a modifier)</dt>
+
+          <dt>Skip, Evade — <span class="arg">X</span> <span class="arg opt">A</span> <span class="arg">B</span> (needs a modifier)</dt>
           <dd>Skip the next instruction unless the register <span class="arg">X</span> is equal/unequal to the number <span class="arg">AB</span> (when ommited, A is zero).</dd>
-        </dl>
-        <dl>
-          <dt>Jump <span class="arg">X</span> <span class="arg">Y</span> (needs a modifier)</dt>
+
+          <dt>Jump — <span class="arg">X</span> <span class="arg">Y</span> (needs a modifier)</dt>
           <dd>Jump over the next instruction unless the register <span class="arg">X</span> is equal/unequal to the register <span class="arg">Y</span>.</dd>
+
+          <dt>Put, Take, Embrace — <span class="arg">X</span> <span class="arg opt">A</span> <span class="arg">B</span></dt>
+          <dd>Load the value <span class="arg">AB</span> in the register <span class="arg">X</span>.</dd>
+
+          <dt>Add — <span class="arg">X</span> <span class="arg opt">A</span> <span class="arg">B</span></dt>
+          <dd>Add the value <span class="arg">AB</span> to the register <span class="arg">X</span>.</dd>
+
+          <dt>Load — <span class="arg">X</span> <span class="arg">Y</span></dt>
+          <dd>Copy the value of register <span class="arg">Y</span> into the register <span class="arg">X</span>.</dd>
+
+          <dt>Merge — <span class="arg">X</span> <span class="arg">Y</span></dt>
+          <dd>Set the register <span class="arg">X</span> = <span class="arg">X</span> OR <span class="arg">Y</span>.</dd>
+
+          <dt>Ponder — <span class="arg">X</span> <span class="arg">Y</span></dt>
+          <dd>Set the register <span class="arg">X</span> = <span class="arg">X</span> AND <span class="arg">Y</span>.</dd>
+
+          <dt>Cross — <span class="arg">X</span> <span class="arg">Y</span></dt>
+          <dd>Set the register <span class="arg">X</span> = <span class="arg">X</span> XOR <span class="arg">Y</span>.</dd>
+
+          <dt>Stack — <span class="arg">X</span> <span class="arg">Y</span></dt>
+          <dd>Add the value of register <span class="arg">Y</span> to the register <span class="arg">X</span> (and set the carry flag in register <span class="arg">F</span>).</dd>
+
+          <dt>Remove — <span class="arg">X</span> <span class="arg">Y</span></dt>
+          <dd>Substract the value of register <span class="arg">Y</span> from the register <span class="arg">X</span> (and set the borrow flag in register <span class="arg">F</span>).</dd>
+
+          <dt>Turn — <span class="arg">X</span></dt>
+          <dd>Shift bits to the right in register <span class="arg">X</span> and through register <span class="arg">F</span>.</dd>
+
+          <dt>Compare — <span class="arg">X</span> <span class="arg">Y</span></dt>
+          <dd>Substract the value of register <span class="arg">X</span> from the register <span class="arg">Y</span>, put the result in <span class="arg">X</span>, and set the borrow flag in register <span class="arg">F</span>.</dd>
+
+          <dt>Rotate — <span class="arg">X</span></dt>
+          <dd>Shift bits to the left in register <span class="arg">X</span> and through register <span class="arg">F</span>.</dd>
+
+          <dt>Remember — <span class="arg">Index</span></dt>
+          <dd>Set the pointer <span class="arg">I</span> to the position of the given title.</dd>
+
+          <dt>Travel — <span class="arg">Index</span></dt>
+          <dd>Go to the given title + the value of register <span class="arg">0</span>.</dd>
+
+          <dt>Confuse — <span class="arg">X</span> <span class="arg">A</span> <span class="arg">B</span></dt>
+          <dd>Put a random value in register <span class="arg">X</span> masked by <span class="arg">AB</span>.</dd>
+
+          <dt>Paint, Draw — <span class="arg">X</span> <span class="arg">Y</span> <span class="arg">A</span></dt>
+          <dd>Draw a sprite of height <span class="arg">A</span> on the screen at the position contained in registers <span class="arg">X</span> and <span class="arg">Y</span>, using pixel data currently indicated by pointer <span class="arg">I</span>.</dd>
+
+          <dt>Listen — <span class="arg">X</span></dt>
+          <dd>Skip the next instruction if the key in register <span class="arg">X</span> is pressed.</dd>
+
+          <dt>Ear — <span class="arg">X</span></dt>
+          <dd>Skip the next instruction if the key in register <span class="arg">X</span> is not pressed.</dd>
+
+          <dt>Tick — <span class="arg">X</span></dt>
+          <dd>Put the current value of the delay timer in register <span class="arg">X</span>.</dd>
+
+          <dt>Wait — <span class="arg">X</span></dt>
+          <dd>Wait for a key to be pressed and put it in register <span class="arg">X</span>.</dd>
+
+          <dt>Rest — <span class="arg">X</span></dt>
+          <dd>Set the delay timer to the value of register <span class="arg">X</span>.</dd>
+
+          <dt>Sing — <span class="arg">X</span></dt>
+          <dd>Set the sound timer to the value of register <span class="arg">X</span>.</dd>
+
+          <dt>Remind — <span class="arg">X</span></dt>
+          <dd>Add the value of register <span class="arg">X</span> to the pointer <span class="arg">I</span> (and set overflow flag in register <span class="arg">F</span>).</dd>
+
+          <dt>Write — <span class="arg">X</span></dt>
+          <dd>Set the pointer <span class="arg">I</span> to the position of the character representing the value in register <span class="arg">X</span>.</dd>
+
+          <dt>Represent — <span class="arg">X</span></dt>
+          <dd>Transform the value in register <span class="arg">X</span> to decimal and save it at position <span class="arg">I</span>, <span class="arg">I+1</span>, <span class="arg">I+2</span>.</dd>
+
+          <dt>Save — <span class="arg">X</span></dt>
+          <dd>Save the values of all registers from <span class="arg">0</span> to <span class="arg">X</span> at position <span class="arg">I</span>.</dd>
+
+          <dt>Restore — <span class="arg">X</span></dt>
+          <dd>Load values into registers <span class="arg">0</span> to <span class="arg">X</span> from memory at position <span class="arg">I</span>.</dd>
         </dl>
       </details>
       <details>
         <summary>Modifiers</summary>
+        <p>Modifiers change the meaning of verbs which are based on equality/unequality.</p>
         <dl>
-          <dt></dt>
-          <dd></dd>
+          <dt>Equality modifiers</dt>
+          <dd>Like(ly), Similar, Identical, Equal, Sometimes</dd>
+
+          <dt>Unequalilty modifiers</dt>
+          <dd>Unlike(ly), Different, Apart, Unequal, Always</dd>
         </dl>
+      </details>
+      <details>
+        <summary>Free form</summary>
+        <p>You can write data if you make a sentence without any of the available verbs.</p>
+        <dl>
+          <dt>No Verb — <span class="arg opt">A</span> <span class="arg opt">B</span> <span class="arg opt">C</span> <span class="arg opt">D</span></dt>
+          <dd>Write the given number <span class="arg">ABCD</span> here in memory.</dd>
+        </dl>
+      </details>
+      <details>
+        <summary>About this project</summary>
+        <p></p>
       </details>
     </div>
   </section>
