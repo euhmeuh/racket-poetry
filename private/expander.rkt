@@ -113,9 +113,11 @@
 
     ; Modifiers for meta verbs
     (word #rx"like(ly)?|similar|identical" '(mode eq))
-    (word #rx"unlike(ly)?|different|apart" '(mode ne))
-    (word #rx"always"                      '(mode ne))
+    (word #rx"equal"                       '(mode eq))
     (word #rx"sometimes"                   '(mode eq))
+    (word #rx"unlike(ly)?|different|apart" '(mode ne))
+    (word #rx"unequal"                     '(mode ne))
+    (word #rx"always"                      '(mode ne))
 
     ; Verbs
     (word #rx"quit(ted|s|ting)?"       'ext)

@@ -77,6 +77,54 @@
     #emulator canvas {
       border: 1px solid var(--bg);
     }
+
+    #dictionary .content {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      height: 0;
+      min-height: 512px;
+      padding-right: 12px;
+    }
+
+    summary {
+      font-size: 1.5em;
+      padding: 12px;
+      border: 1px solid var(--bg);
+      border-radius: var(--border-radius);
+    }
+
+    details {
+      margin-bottom: 6px;
+    }
+
+    details p {
+      margin-left: 24px;
+    }
+
+    dt {
+      font-weight: bold;
+      margin-left: 24px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    dd {
+      margin-left: 48px;
+    }
+
+    .arg {
+      background-color: var(--bg);
+      color: var(--accent);
+      font-weight: normal;
+      border-radius: 64px;
+      padding: 4px 8px 0px 8px;
+    }
+
+    .arg.opt {
+      background-color: transparent;
+      border: 1px solid var(--bg);
+      color: var(--bg);
+    }
   </style>
 </head>
 <body>
@@ -114,59 +162,110 @@ Go and say: Hello, world!
 
   <section id="dictionary" class="box primary display-none">
     <h2>Dictionary</h2>
-    <details>
-      <summary>Numbers</summary>
-      <p>Numbers are expressed as hexadecimal nibbles, from 0 to F.<br>
-         For example, the number 42 is 2A in hexadecimal, which is made of the nibbles 2 and A.</p>
-      <dl>
-        <dt>0 (zero)</dt>
-        <dd>Void, Death, Night, Blackhole, Zero, None, Empty(iness), Nothing(ness), Still(ness), Snow, Nowhere, False, Dark, Black</dd>
-        <dt>1 (one)</dt>
-        <dd>Water, Tear, Sea, Yes, True, Truth, Everywhere, One, Once, First, Blue</dd>
-        <dt>2 (two)</dt>
-        <dd>Fire, Blaze, Burn, Two, Twice, Second(ary), Red</dd>
-        <dt>3 (three)</dt>
-        <dd>Vapor, Steam, Fog, Three, Third, Purple</dd>
-        <dt>4 (four)</dt>
-        <dd>Earth, Soil, Ground, Rocks, Four, Fourth, Yellow</dd>
-        <dt>5 (five)</dt>
-        <dd>Mud, Oil, Glue, Tree, Leaf, Five, Fifth, Green</dd>
-        <dt>6 (six)</dt>
-        <dd>Lava, Volcano, Six, Sixth, Orange</dd>
-        <dt>7 (seven)</dt>
-        <dd>Ceramic, Bowl, Seven, Seventh, Grey, Gray</dd>
-        <dt>8 (eight)</dt>
-        <dd>Wind, Blow, Eight, Cyan</dd>
-        <dt>9 (nine)</dt>
-        <dd>Rain, Drop, Nine, Ninth, Marine</dd>
-        <dt>A (ten)</dt>
-        <dd>Thunder, Bolt, Spark, Ten, Tenth, Violet</dd>
-        <dt>B (eleven)</dt>
-        <dd>Cloud, Sky, Eleven, Eleventh, Pink</dd>
-        <dt>C (twelve)</dt>
-        <dd>Sand, Desert, Snake, Twelve, Twelfth, Rose</dd>
-        <dt>D (thirteen)</dt>
-        <dd>River, Net, Fish, Thirteen, Thirteenth, Azure(an)</dd>
-        <dt>E (fourteen)</dt>
-        <dd>Window, Glass, Transparent, Fourteen, Fourteenth</dd>
-        <dt>F (fifteen)</dt>
-        <dd>Life, Living, Complete, Full(y), Sun, Light, Planet, Fifteen, Fifteenth, White</dd>
-      </dl>
-    </details>
-    <details>
-      <summary>Verbs</summary>
-      <dl>
-        <dt></dt>
-        <dd></dd>
-      </dl>
-    </details>
-    <details>
-      <summary>Modifiers</summary>
-      <dl>
-        <dt></dt>
-        <dd></dd>
-      </dl>
-    </details>
+    <div class="content">
+      <details>
+        <summary>Numbers</summary>
+        <p>
+           Numbers are expressed as hexadecimal nibbles, from 0 to F.<br>
+           For example, the number 42 is 2A in hexadecimal, which is made of the nibbles 2 and A.<br>
+           2 can be "Fire" and A can be "Spark", so 42 can be expressed as "Fire spark".<br>
+           Other possibilities are "Red thunder", "Blazing bolt" or "Smell twice the Violet".
+        </p>
+        <dl>
+          <dt>0 (zero)</dt>
+          <dd>Void, Death, Night, Blackhole, Zero, None, Empty(iness), Nothing(ness), Still(ness), Snow, Nowhere, False, Dark, Black</dd>
+          <dt>1 (one)</dt>
+          <dd>Water, Tear, Sea, Yes, True, Truth, Everywhere, One, Once, First, Blue</dd>
+          <dt>2 (two)</dt>
+          <dd>Fire, Blaze, Burn, Two, Twice, Second(ary), Red</dd>
+          <dt>3 (three)</dt>
+          <dd>Vapor, Steam, Fog, Three, Third, Purple</dd>
+          <dt>4 (four)</dt>
+          <dd>Earth, Soil, Ground, Rocks, Four(th), Yellow</dd>
+          <dt>5 (five)</dt>
+          <dd>Mud, Oil, Glue, Tree, Leaf, Five, Fifth, Green</dd>
+          <dt>6 (six)</dt>
+          <dd>Lava, Volcano, Six(th), Orange</dd>
+          <dt>7 (seven)</dt>
+          <dd>Ceramic, Bowl, Seven(th), Grey, Gray</dd>
+          <dt>8 (eight)</dt>
+          <dd>Wind, Blow, Eight(h), Cyan</dd>
+          <dt>9 (nine)</dt>
+          <dd>Rain, Drop, Nine, Ninth, Marine</dd>
+          <dt>A (ten)</dt>
+          <dd>Thunder, Bolt, Spark, Ten(th), Violet</dd>
+          <dt>B (eleven)</dt>
+          <dd>Cloud, Sky, Eleven(th), Pink</dd>
+          <dt>C (twelve)</dt>
+          <dd>Sand, Desert, Snake, Twelve, Twelfth, Rose</dd>
+          <dt>D (thirteen)</dt>
+          <dd>River, Net, Fish, Thirteen(th), Azure(an)</dd>
+          <dt>E (fourteen)</dt>
+          <dd>Window, Glass, Transparent, Fourteen(th)</dd>
+          <dt>F (fifteen)</dt>
+          <dd>Life, Living, Complete, Full(y), Sun, Light, Planet, Fifteen(th), White</dd>
+        </dl>
+      </details>
+      <details>
+        <summary>Verbs</summary>
+        <p>
+          Verbs expect some parameters to be present anywhere inside the sentence (even before them). The order of the parameters is important, because the verb will take them from first to last.<br>
+          In definitions, the number of parameters each verb takes is indicated just after the verb, like this:
+        <blockquote>
+          <dl>
+            <dt>Verb <span class="arg">X</span> <span class="arg">Y</span></dt>
+            <dd>What the verb does with <span class="arg">X</span> and <span class="arg">Y</span>.</dd>
+          </dl>
+        </blockquote>
+        <p>
+          There are three types of parameters : numbers, indexes and modifiers.
+        </p>
+        <p>
+          Numbers are nibbles (see the "Numbers" section of the dictionary) and can sometimes be expressed by specifying the last nibble only (the first being an implicit zero). In that case, the implicit argument is indicated with a circle <span class="arg opt">A</span> in the verb definition.
+        </p>
+        <p>
+          Indexes are used for movements and memory instructions. The verb tries to find the longest complete word in the sentence that matches one of the poem titles. Indexes cannot be expressed as numbers for now, only as plain text words.
+        </p>
+        <p>
+          Modifiers are used in only two verbs, "Skip, Evade" and "Jump". They specify whether the instruction should be "skip if equal" or "skip if different". They can be anywhere in the sentence, but need to be there, otherwise the verb can't be translated into a machine instruction. You can find the list of modifiers in the corresponding dictionary section.
+        </p>
+        <dl>
+          <dt>Quit <span class="arg">A</span></dt>
+          <dd>Stop the program and return the value <span class="arg">A</span>.</dd>
+        </dl>
+        <dl>
+          <dt>Clear</dt>
+          <dd>Clear the screen.</dd>
+        </dl>
+        <dl>
+          <dt>Return, Leave</dt>
+          <dd>Return from a subroutine.</dd>
+        </dl>
+        <dl>
+          <dt>Go <span class="arg">Index</span></dt>
+          <dd>Go to the given title.</dd>
+        </dl>
+        <dl>
+          <dt>Call, Hail <span class="arg">Index</span></dt>
+          <dd>Call the subroutine at the given title.</dd>
+        </dl>
+        <dl>
+          <dt>Skip, Evade <span class="arg">X</span> <span class="arg opt">A</span> <span class="arg">B</span> (needs a modifier)</dt>
+          <dd>Skip the next instruction unless the register <span class="arg">X</span> is equal/unequal to the number <span class="arg">AB</span> (when ommited, A is zero).</dd>
+        </dl>
+        <dl>
+          <dt>Jump <span class="arg">X</span> <span class="arg">Y</span> (needs a modifier)</dt>
+          <dd>Jump over the next instruction unless the register <span class="arg">X</span> is equal/unequal to the register <span class="arg">Y</span>.</dd>
+        </dl>
+      </details>
+      <details>
+        <summary>Modifiers</summary>
+        <dl>
+          <dt></dt>
+          <dd></dd>
+        </dl>
+      </details>
+    </div>
   </section>
 
   <script type="text/javascript" src="_.js"></script>
