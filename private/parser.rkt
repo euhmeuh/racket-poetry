@@ -23,6 +23,6 @@
 poem: line*
 @line: /SP* (title | sentence)? /SP* /EOL
 title: /MARKER+ @sentence /SP* /MARKER*
-sentence: /punctuation* word (/punctuation* word /punctuation*)*
+sentence: /punctuation* word /punctuation* (word /punctuation*)*
 punctuation: PUNCT | SP
 @word: STRING

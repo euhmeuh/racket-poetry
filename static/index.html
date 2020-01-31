@@ -153,6 +153,7 @@ Go and say: Hello, world!
 </textarea>
     <div class="button-box">
       <a class="button secondary pull-left" href="https://github.com/euhmeuh/racket-poetry" target="_blank">GitHub</a>
+      <a class="button secondary" href="https://mamot.fr/@euhmeuh" target="_blank">Contact me</a>
       <button id="button-dictionary" type="button" class="secondary">Help & Dictionary</button>
       <button id="button-read" type="button" class="primary">Read!</button>
     </div>
@@ -442,6 +443,10 @@ Go and say: Hello, world!
         Request.post("/", textarea.value, "text/plain").then((response) => {
           clearMessages();
           console.log(response);
+          if(response.error) {
+            addMessage(response.error);
+            return;
+          }
           const program = Base64.decode(response.binary);
           chip.loadProgram(program);
           chip.start();

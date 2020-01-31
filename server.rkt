@@ -20,16 +20,15 @@
 ;
 ;===============================================================================
 
+(provide response-poem)
+
 (require
   racket/path
   racket/sandbox
   racket/string
   web-server/http
   web-galaxy/response
-  web-galaxy/serve
   racket-poetry/private/assembler)
-
-(define static-path (path->string (build-path (current-server-root-path) "static")))
 
 (define (format-assembly ast)
   (map
@@ -39,18 +38,28 @@
            line))
     ast))
 
+(define ((error-handler message) e)
+  (hasheq 'error (string-append message ": " (exn-message e))))
+
+(define (sandbox-eval text)
+  (with-handlers ([exn:fail:contract:arity? (error-handler "Incorrect number of arguments")]
+                  [exn? (error-handler "An unknown exception occured")])
+    (define evaluator (make-module-evaluator (string-append "#lang racket-poetry\n" text "\n")))
+    (evaluator '(require 'poem-file))
+    (define ast (evaluator 'poem))
+    (hasheq
+      'binary (assemble ast)
+      'assembly (format-assembly ast))))
+
 (define-response (poem)
   (define raw (request-post-data/raw req))
   (define text (bytes->string/utf-8 raw))
-  (define evaluator (make-module-evaluator (string-append "#lang racket-poetry\n" text "\n")))
-  (evaluator '(require 'poem-file))
-  (define result (evaluator 'poem))
-  (response/json
-    (hasheq
-      'binary (assemble result)
-      'assembly (format-assembly result)
-      'errors (list))))
+  (define result (sandbox-eval text))
+  (response/json result))
 
-(parameterize ([current-server-static-paths (list static-path)])
-  (serve/all
-    [POST ("") response-poem]))
+(module+ main
+  (require web-galaxy/serve)
+  (define static-path (path->string (build-path (current-server-root-path) "static")))
+  (parameterize ([current-server-static-paths (list static-path)])
+    (serve/all
+      [POST ("") response-poem])))
