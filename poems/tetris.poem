@@ -7,7 +7,7 @@ call initone
 - drawbase -
 add zero one
 draw zero one one
-skip zero if equals two five
+skip zero if equal two five
 go drawbase
 
 - drawwalls -
@@ -16,10 +16,99 @@ draw zero one one
 take zero one ten
 draw zero one one
 take zero two five
-skip one if equals zero
+skip one if equal zero
 go drawwalls
 
-quit zero
+- newpiece -
+confuse four seven zero
+skip four if unequal seven zero
+go newpiece
+confuse three three
+take zero one fourteen
+take one three
+call findpiece
+
+- stepdown -
+rest five
+draw zero one four
+skip if equal fifteen one
+go handlekeys
+draw zero one four
+add one fifteen fifteen
+draw zero one four
+call checkline
+go newpiece
+
+- handlekeys -
+ear seven
+call moveleft
+ear eight
+call moveright
+ear nine
+call rotatepiece
+listen two
+go labelone
+take six zero
+rest six
+=labelone=
+tick six
+skip if equal six zero
+go handlekeys
+draw zero one four
+add one one
+go stepdown
+
+- findpiece -
+remember tetrominos
+remind four
+take six zero
+skip if unequal three one
+take six four
+skip if unequal three two
+take six eight
+skip if unequal three three
+take six twelve
+remind six
+return
+
+- moveleft -
+draw zero one four
+add zero fifteen fifteen
+call drawpiece
+skip if equal fifteen one
+return
+draw zero one four
+add zero one
+call drawpiece
+return
+
+- moveright -
+draw zero one four
+add zero one
+call drawpiece
+skip if equal fifteen one
+return
+draw zero one four
+add zero fifteen fifteen
+call drawpiece
+return
+
+- rotatepiece -
+draw zero one four
+add three one
+skip if unequal three four
+take three zero
+call findpiece
+call drawpiece
+skip if equal fifteen one
+return
+draw zero one four
+add three fifteen fifteen
+skip if unequal three fifteen fifteen
+take three three
+call findpiece
+call drawpiece
+return
 
 - pattern -
 eight zero zero zero
@@ -33,7 +122,183 @@ take five one zero
 take two seven
 return
 
+- tetrominos -
+four zero fourteen zero
+zero
+four zero twelve zero
+four zero zero zero
+fourteen zero
+four zero zero zero
+four zero six zero
+four zero zero zero
+four zero four zero
+six zero zero zero
+two zero fourteen zero
+zero
+twelve zero four zero
+four zero zero zero
+fourteen zero
+eight zero zero zero
+four zero four zero
+twelve zero zero zero
+fourteen zero
+two zero zero zero
+six zero four zero
+four zero zero zero
+eight zero fourteen zero
+zero
+four zero twelve zero
+eight zero zero zero
+twelve zero six zero
+zero
+four zero twelve zero
+eight zero zero zero
+twelve zero six zero
+zero
+eight zero twelve zero
+four zero zero zero
+six zero
+twelve zero zero zero
+eight zero twelve zero
+four zero zero zero
+six zero
+twelve zero zero zero
+twelve zero twelve zero
+zero
+twelve zero twelve zero
+zero
+twelve zero twelve zero
+zero
+twelve zero twelve zero
+zero
+four zero four zero
+four zero four zero
+fifteen zero
+zero
+four zero four zero
+four zero four zero
+fifteen zero
+zero
+
+- drawpiece -
+draw zero one four
+take six three five
+=waitloop=
+add six fifteen fifteen
+skip if equal six zero
+go waitloop
+return
+
+- checkline -
+remember pattern
+load twelve one
+skip if equal twelve one fourteen
+add twelve one
+skip if equal twelve one fourteen
+add twelve one
+skip if equal twelve one fourteen
+add twelve one
+=labeltwo=
+call countblocks
+skip if unequal eleven ten
+call deleteline
+jump if unequal one twelve
+return
+add one one
+go labeltwo
+
+- countblocks -
+take zero one eleven
+take eleven zero
+=labelthree=
+draw zero one one
+skip if equal fifteen zero
+add eleven one
+draw zero one one
+add zero one
+skip if equal zero two five
+go labelthree
+return
+
+- deleteline -
+take zero one eleven
+=labelfour=
+draw zero one one
+add zero one
+skip if equal zero two five
+go labelfour
+load fourteen one
+load thirteen fourteen
+add fourteen fifteen fifteen
+=labelfive=
+take zero one eleven
+take eleven zero
+=labelsix=
+draw zero fourteen one
+skip if equal fifteen zero
+go labelseven
+draw zero fourteen one
+go labeleight
+=labelseven=
+draw zero thirteen one
+add eleven one
+=labeleight=
+add zero one
+skip if equal zero two five
+go labelsix
+skip if unequal eleven zero
+go updatescore
+add thirteen fifteen fifteen
+add fourteen fifteen fifteen
+skip if equal thirteen one
+go labelfive
+
+- updatescore -
+call drawscore
+skip if equal fifteen one
+call drawscore
+add ten one
+call drawscore
+
+- accelerate -
+load zero ten
+take thirteen seven
+ponder zero thirteen
+skip if unequal zero four
+add five fifteen fourteen
+skip if unequal five two
+take five four
+return
+
+- drawscore -
+remember memoryone
+save two
+remember memorytwo
+represent ten
+restore two
+write zero
+take thirteen three two
+take fourteen zero
+draw thirteen fourteen five
+add thirteen five
+write one
+draw thirteen fourteen five
+add thirteen five
+write two
+draw thirteen fourteen five
+remember memoryone
+restore two
+remember pattern
+return
+
 - initzero -
 take ten zero
 take zero one nine
 return
+
+- memoryone -
+zero
+zero
+
+- memorytwo -
+zero

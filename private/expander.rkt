@@ -152,13 +152,13 @@
     (word #rx"ear(s|ed|ing)?"          'skn)
     (word #rx"tick(s|ed|ing)?"         'ldt)
     (word #rx"wait(s|ed|ing)?"         'ldk)
-    (word #rx"rest(s|ed|ing)?"         'std)
-    (word #rx"sing(s|eg|ing)?"         'sts)
-    (word #rx"remind(s|ed|ing)?"       'mea)
-    (word #rx"(writ(es|en|ing)|wrote)" 'fnt)
-    (word #rx"represent(s|ed|ing)?"    'bcd)
-    (word #rx"sav(e|es|ed|ing)"        'dmp)
-    (word #rx"restor(e|es|ed|ing)"     'rst)
+    (word #rx"rest(s|ed|ing)?"           'std)
+    (word #rx"sing(s|eg|ing)?"           'sts)
+    (word #rx"remind(s|ed|ing)?"         'mea)
+    (word #rx"(writ(e|es|en|ing)|wrote)" 'fnt)
+    (word #rx"represent(s|ed|ing)?"      'bcd)
+    (word #rx"sav(e|es|ed|ing)"          'dmp)
+    (word #rx"restor(e|es|ed|ing)"       'rst)
     ))
 
 (define ((starts-with? sym) l)
@@ -217,7 +217,8 @@
       (raise-arguments-error 'poem-index
                              "no index found for jump"
                              "words" words
-                             "indexes" indexes)))
+                             "indexes" indexes
+                             "sentence" sentence)))
 
 (define (take-numbers sentence [size 0] [skip 0])
   (define filtered (filter number? sentence))
