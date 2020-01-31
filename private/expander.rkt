@@ -113,10 +113,10 @@
 
     ; Modifiers for meta verbs
     (word #rx"like(ly)?|similar|identical" '(mode eq))
-    (word #rx"equal"                       '(mode eq))
+    (word #rx"equal(s|ity)?"               '(mode eq))
     (word #rx"sometimes"                   '(mode eq))
     (word #rx"unlike(ly)?|different|apart" '(mode ne))
-    (word #rx"unequal"                     '(mode ne))
+    (word #rx"unequal|inequality"          '(mode ne))
     (word #rx"always"                      '(mode ne))
 
     ; Verbs

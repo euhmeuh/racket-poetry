@@ -1,0 +1,39 @@
+#lang racket-poetry
+
+remember pattern
+call initzero
+call initone
+
+- drawbase -
+add zero one
+draw zero one one
+skip zero if equals two five
+go drawbase
+
+- drawwalls -
+add one fifteen fifteen
+draw zero one one
+take zero one ten
+draw zero one one
+take zero two five
+skip one if equals zero
+go drawwalls
+
+quit zero
+
+- pattern -
+eight zero zero zero
+
+- initone -
+take seven five
+take eight six
+take nine four
+take one one fifteen
+take five one zero
+take two seven
+return
+
+- initzero -
+take ten zero
+take zero one nine
+return
