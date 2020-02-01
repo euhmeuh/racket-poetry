@@ -337,7 +337,7 @@ Go and say: Hello, world!
           <dt>Travel — <span class="arg">Index</span></dt>
           <dd>Go to the given title + the value of register <span class="arg">0</span>.</dd>
 
-          <dt>Confuse — <span class="arg">X</span> <span class="arg">A</span> <span class="arg">B</span></dt>
+          <dt>Confuse — <span class="arg">X</span> <span class="arg opt">A</span> <span class="arg">B</span></dt>
           <dd>Put a random value in register <span class="arg">X</span> masked by <span class="arg">AB</span>.</dd>
 
           <dt>Paint, Draw — <span class="arg">X</span> <span class="arg">Y</span> <span class="arg">A</span></dt>
@@ -476,7 +476,7 @@ Go and say: Hello, world!
       );
       chipRenderer.setFgColor("#ECE1D6");
       chip.setRenderer(chipRenderer);
-      chip.setCycles(40);
+      chip.setCycles(10);
       //chip.setCycles(28672);
 
       const translateKeys = {

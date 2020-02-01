@@ -1,0 +1,91 @@
+#lang racket-poetry
+
+put into register one: zero
+put into register two: zero
+put into register three: three eight
+put into register four: one eleven
+put into register five: zero
+put into register six: eight
+
+remember the ufopattern
+draw at five six: three lines
+
+- newlife -
+call score
+skip next if register two is unequal to nine
+quit zero
+add to register two: one
+put into register eight: one ten
+put into register ten: zero
+confuse register seven with mask one fifteen
+add to register seven: fifteen
+put into register nine: zero
+remember the ROCKET
+draw at seven eight: six lines
+
+- drawufo -
+remember the ufopattern
+draw at five six: three lines
+confuse register zero with mask three
+stack register five and register zero
+draw at five six: three lines
+skip next if fifteen equals zero
+go beep
+
+put into zero: fifteen
+ear zero
+put into nine: one
+skip if nine equals one
+go drawufo
+
+tick into register zero
+skip if zero equals zero
+go drawufo
+
+remember the ROCKET
+draw at seven eight: six lines
+add to register eight: fifteen fifteen
+draw at seven eight: six lines
+skip if fifteen equals zero
+go beep
+
+put into register zero: three
+rest in zero
+skip if eight equals zero
+go drawufo
+
+- damage -
+call score
+remember the ROCKET
+draw at seven eight: six lines
+stack one and ten
+go newlife
+
+- beep -
+put into ten: one
+put into zero: three
+sing zero
+go damage
+
+- score -
+remember memoryone
+represent one
+remember memorytwo
+restore zero
+write zero
+draw at three four: five lines
+return
+
+- ROCKET -
+two zero seven zero
+seven zero fifteen eight
+thirteen eight eight eight
+
+- ufopattern -
+seven twelve thirteen six
+seven twelve zero zero
+
+- memoryone -
+zero
+- memorytwo -
+zero
