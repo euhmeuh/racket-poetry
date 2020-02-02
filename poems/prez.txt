@@ -1,0 +1,100 @@
+
+
+
+Hello! I'm Jérôme Martin.
+I love programming, but I also love art and poetry.
+
+So I made a poem-oriented language!
+
+
+
+
+
+
+
+
+
+
+You write a poem, and you hide a program inside it by using specific words.
+When the poem is read by the machine, it executes the program.
+
+
+
+
+
+
+
+
+But I needed a virtual machine to execute my program in, so I settled on something simple and minimalist, yet powerful enough to make things interesting.
+
+
+But first, I need to make a quick demographic census in the room...
+
+
+
+
+
+
+
+    Who in the room was born in or before the 70s?
+    Raise your hand!
+
+
+
+
+
+
+
+
+
+    Who in the room is ready to
+    go back to the 70s right now?
+
+
+
+
+
+
+
+
+
+
+
+If you were born at that time, you might know about:
+
+    The CHIP-8 virtual machine
+
+It was created in the 70s as a simple way to write programs directly in hexadecimal.
+
+It featured a way to show graphics on the screen, and was designed to ease the creation of games.
+
+Let's go back in time and see what it looked like to program games in the 70s!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+If you liked the idea, and want to try by yourself:
+
+    Go to      ->     rilouw.eu/poem      <-
+
+    Read the docs by clicking "Help & Dictionary"
+
+    Share your poems on Mastodon with the hashtag:
+
+                    ->       #codepoetry       <-
+
+
+
+    Thanks for your attention!
