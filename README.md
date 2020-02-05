@@ -2,6 +2,39 @@
 
 Poetry to Code interpreter built with Racket
 
+## How it works
+
+```
+                 Poem
++----------------------------------------+
+| Remember the red sea.                  |
+| Pait its empty spaces once with life.  |
+| The blue suns have quit.               |
++----------------------------------------+
+                   |
+                   V
+         Dictionary replacements
++----------------------------------------+ red = 2
+| MEM (the) 2 1                          | blue, sea, once = 1
+| DRAW (its) 0 (spaces) 1 (with) F       | life = F
+| (The) 1 (suns) (have) EXIT             | remember = MEM
++----------------------------------------+ paint = DRAW
+                   |                       quit = EXIT
+                   V
+              Chip-8 assembly
++----------------------------------------+
+| MEM 021                                |
+| DRAW V0,V1 $F                          |
+| EXIT 1                                 |
++----------------------------------------+
+                   |
+                   V
+                Binary
++----------------------------------------+
+| A021 D01F 0011                         |
++----------------------------------------+
+```
+
 ## License
 
 ```
